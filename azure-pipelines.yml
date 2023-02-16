@@ -1,0 +1,24 @@
+# https://docs.microsoft.com/azure/devops/pipelines/languages/javascript
+trigger:
+- refs/tags/*
+pool:
+  name: 'euei-demo2'
+steps:
+- task: NodeTool@0
+  inputs:
+    versionSpec: '16.x'
+  displayName: 'install node.js'
+- task: Npm@1
+  displayName: 'npm install'
+  inputs:
+    command: 'install'
+    verbose: true
+    customRegistry: 'useFeed'
+    customFeed: '272f454d-0aec-4e83-971f-bdb4db29c90c/cd0f1f6a-79c5-4aad-a05b-97d6e548e680'
+- task: Npm@1
+  displayName: 'npm publish'
+  inputs:
+    command: 'publish'
+    verbose: true
+    publishRegistry: 'useFeed'
+    publishFeed: '272f454d-0aec-4e83-971f-bdb4db29c90c/cd0f1f6a-79c5-4aad-a05b-97d6e548e680'
